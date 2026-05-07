@@ -126,7 +126,7 @@ export function WhyUs() {
 
       {/* Desktop: draggable cards */}
       <DraggableCardContainer className="hidden md:block relative left-1/2 h-[500px] w-screen -translate-x-1/2">
-        {benefits.map((item, i) => (
+        {benefits.map((item) => (
           <DraggableCardBody key={item.id} className={item.className}>
             <div className="bg-white p-3 pb-10 shadow-[0_8px_40px_rgba(0,0,0,0.2)]">
               <img
