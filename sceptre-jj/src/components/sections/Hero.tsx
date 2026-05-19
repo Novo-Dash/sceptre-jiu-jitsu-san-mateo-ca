@@ -67,20 +67,20 @@ export function Hero({ onBooking }: HeroProps) {
           id="hero-title"
           data-hero-animate
           className="font-black text-white leading-[0.85] mb-4 max-md:tracking-[-0.01em] md:[letter-spacing:-1.5px]"
-          style={{ fontSize: 'clamp(2.4rem, 10vw, 11rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
+          style={{ fontSize: 'clamp(2.2rem, 6.8vw, 7rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
         >
-          <span className="block whitespace-nowrap">Train Jiu-Jitsu.</span>
-          <span className="block md:hidden">Change Your</span>
-          <span className="block md:hidden">Life.</span>
-          <span className="hidden md:block whitespace-nowrap">Change Your Life.</span>
+          <span className="block whitespace-nowrap">Train Jiu-Jitsu</span>
+          <span className="block md:hidden">In an Inclusive</span>
+          <span className="block md:hidden">Community.</span>
+          <span className="hidden md:block whitespace-nowrap">In an Inclusive Community.</span>
         </h1>
 
         <p
           data-hero-animate
           className="text-base md:text-lg text-white leading-[1.6] mt-8 mb-8 max-w-2xl mx-auto"
         >
-          Modern, inclusive Brazilian Jiu-Jitsu in San Mateo, CA.{' '}
-          Adults, kids, and women's programs — no experience needed.
+          Sceptre is a different kind of academy — here, you start Jiu-Jitsu feeling comfortable,
+          regardless of your age or fitness level. Our community's number one value is inclusion for all.
         </p>
 
         <div data-hero-animate className="flex flex-wrap gap-4 justify-center">

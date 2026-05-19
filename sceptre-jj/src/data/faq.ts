@@ -2,39 +2,45 @@ import type { FaqItem } from '../types'
 
 export const faqItems: FaqItem[] = [
   {
-    id: 'experience',
-    question: 'Do I need experience to start?',
+    id: 'what-is-sceptre',
+    question: 'What is Sceptre?',
     answer:
-      'Not at all. Our classes are designed to welcome complete beginners. You\'ll train at your own pace alongside other students at all levels — everyone starts somewhere.',
+      'Sceptre is an inclusive Jiu-Jitsu academy in San Mateo, CA. A warm community has grown around it and is waiting for you for your first free class.',
   },
   {
-    id: 'kids-age',
-    question: 'What age can kids start?',
+    id: 'fitness',
+    question: 'Do I need to be in shape to start?',
     answer:
-      'Our Kids BJJ program is open to children ages 5 and up. Classes are structured to be age-appropriate, fun, and focused on building confidence and discipline.',
+      'No. Classes are designed for all fitness levels and complete beginners. You train at your own pace — no prior experience or athletic background required.',
   },
   {
-    id: 'parents-train',
-    question: 'Can parents train with their kids?',
+    id: 'trial-class',
+    question: 'What is a trial class?',
     answer:
-      'Yes — parents are welcome to take the class with their child at no extra charge. It\'s one of our most popular perks and a great way to bond while both getting fit.',
+      'A free class built around two activities: warm-up and basic techniques. No experience needed. We provide everything, including the uniform — just show up.',
   },
   {
-    id: 'womens-class',
-    question: "Do you offer women-only classes?",
+    id: 'why-trial',
+    question: 'Why should I try a trial class?',
     answer:
-      'Yes. We run a weekly women-only class taught by Miranda (Purple Belt) plus a free monthly women\'s open mat. It\'s a welcoming and supportive environment for all skill levels.',
+      'It\'s the best way to experience the environment, meet the instructors, and see if Jiu-Jitsu fits you — with zero commitment. You might just fall in love with it.',
   },
   {
-    id: 'what-to-wear',
-    question: 'What should I wear to my first class?',
+    id: 'kids',
+    question: 'Are kids welcome?',
     answer:
-      'Comfortable athletic wear is perfect. If you don\'t have a gi (the traditional BJJ uniform), we have loaner gis available so you don\'t need to buy anything before you decide to join.',
+      'Yes. Our Kids BJJ program is open to children ages 5 and up. Our inclusive methodology fits perfectly into childhood, with classes focused on fun, confidence, and respect.',
   },
   {
-    id: 'contract',
-    question: 'Is there a contract or commitment?',
+    id: 'safety',
+    question: 'Is Jiu-Jitsu safe?',
     answer:
-      'No contracts, no commitment. Try your first class completely free. If you love it — and most people do — you can sign up then. We want you to be sure before you commit.',
+      'Yes. Classes are supervised by experienced instructors who prioritize positioning and safety from minute one. The only risk is enjoying it too much.',
+  },
+  {
+    id: 'weight-loss',
+    question: 'Is Jiu-Jitsu good for weight loss?',
+    answer:
+      'Yes. It\'s a full-body workout that helps burn calories, build muscle, and — most importantly — build the consistency that makes results stick.',
   },
 ]

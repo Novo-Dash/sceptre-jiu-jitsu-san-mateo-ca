@@ -24,8 +24,8 @@ export function Programs({ onBooking }: ProgramsProps) {
     <Section id="programs" labelledBy="programs-heading">
       <SectionHeader
         id="programs-heading"
-        headline="Find your path"
-        sub="Adults, kids, and women's classes — every level welcome, no experience needed."
+        headline="Our classes"
+        sub="Beginner-friendly programs for adults, kids, and women — no experience needed."
         centered
         headlineClassName="!text-[clamp(2.8rem,8vw+0.5rem,7rem)] tracking-[-0.03em]"
         headlineStyle={{ fontFamily: "'Noken', system-ui, sans-serif", marginTop: '-0.2em' }}
@@ -71,7 +71,7 @@ export function Programs({ onBooking }: ProgramsProps) {
                 </div>
 
                 <div className="flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wider shrink-0">
-                  Start Train
+                  Start Training
                   <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-600">
                     {arrowIcon}
                   </span>

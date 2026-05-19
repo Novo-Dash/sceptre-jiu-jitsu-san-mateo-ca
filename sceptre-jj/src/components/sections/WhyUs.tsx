@@ -97,16 +97,16 @@ export function WhyUs() {
     <Section id="why-us" labelledBy="why-us-heading">
       <SectionHeader
         id="why-us-heading"
-        eyebrow="Why Sceptre"
+        eyebrow="Our Philosophy"
         headline={
           <>
-            <span className="block text-[0.72em] tracking-[0em] md:hidden">The Sceptre</span>
-            <span className="block tracking-[-0.01em] md:hidden">standard.</span>
-            <span className="hidden md:block whitespace-nowrap">The Sceptre standard.</span>
+            <span className="block md:hidden">Training is</span>
+            <span className="block md:hidden">easier together.</span>
+            <span className="hidden md:block whitespace-nowrap">Training is easier together.</span>
           </>
         }
-        sub="Everything Jiu-Jitsu builds in you — drag the cards to explore."
-        headlineClassName="!text-[clamp(3.2rem,7vw+0.5rem,7.5rem)] md:tracking-[-0.03em]"
+        sub="At Sceptre, we build a community rooted in inclusion. No matter your age or fitness level — you'll be one of us from day one."
+        headlineClassName="!text-[clamp(2.6rem,5.2vw,5.8rem)] md:tracking-[-0.03em]"
         headlineStyle={{ fontFamily: "'Noken', system-ui, sans-serif", marginTop: '-0.2em' }}
       />
 
@@ -145,6 +145,7 @@ export function WhyUs() {
           </DraggableCardBody>
         ))}
       </DraggableCardContainer>
+
     </Section>
   )
 }

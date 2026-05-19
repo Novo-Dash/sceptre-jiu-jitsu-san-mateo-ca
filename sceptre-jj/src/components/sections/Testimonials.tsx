@@ -98,11 +98,11 @@ export function Testimonials() {
           <h2
             id="testimonials-title"
             className="font-black text-[var(--color-text)] leading-[0.92] tracking-[-0.03em]"
-            style={{ fontSize: 'clamp(2.6rem, 6vw + 0.5rem, 7rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
+            style={{ fontSize: 'clamp(2.4rem, 5.2vw, 5.8rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
           >
-            <span className="block md:hidden">What Our</span>
-            <span className="block md:hidden">Students Say</span>
-            <span className="hidden md:block whitespace-nowrap">What Our Students Say</span>
+            <span className="block md:hidden">Meet Some of</span>
+            <span className="block md:hidden">Our Students</span>
+            <span className="hidden md:block whitespace-nowrap">Meet Some of Our Students</span>
           </h2>
         </div>
 

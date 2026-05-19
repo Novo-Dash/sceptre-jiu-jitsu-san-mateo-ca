@@ -27,8 +27,8 @@ export function Footer({ onBooking }: FooterProps) {
               style={{ filter: 'invert(1)' }}
             />
             <p className="text-sm text-white/50 leading-relaxed max-w-xs">
-              Modern and inclusive Brazilian Jiu-Jitsu in San Mateo, CA.
-              No ego. No contracts. Just world-class technique.
+              Sceptre is an inclusive Jiu-Jitsu academy where anyone can be part of a supportive community.
+              Our method is designed for beginners of all ages and fitness levels.
             </p>
             <a
               href="https://www.instagram.com/sceptrejj"

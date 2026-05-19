@@ -14,8 +14,8 @@ export function Instructors() {
     <Section id="instructors" labelledBy="instructors-heading">
       <SectionHeader
         id="instructors-heading"
-        headline="World-class teachers"
-        sub="Three dedicated instructors. One mission: help you become your best."
+        headline="Meet our team"
+        sub="Three dedicated instructors with one shared mission: to make you feel welcome and help you grow."
         centered
         headlineClassName="!text-[clamp(2.8rem,8vw+0.5rem,7rem)] tracking-[-0.03em] md:whitespace-nowrap"
         headlineStyle={{ fontFamily: "'Noken', system-ui, sans-serif" }}
