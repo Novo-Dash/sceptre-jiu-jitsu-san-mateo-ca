@@ -31,7 +31,7 @@ export function App() {
       <main id="main-content" tabIndex={-1}>
         <Hero onBooking={handleBooking} />
         <Programs onBooking={handleBooking} />
-        <WhyUs />
+        <WhyUs onBooking={handleBooking} />
         <Instructors />
         <Testimonials />
         <FAQ />

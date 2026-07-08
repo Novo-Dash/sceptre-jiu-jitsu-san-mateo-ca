@@ -1,75 +1,41 @@
 import { Section, SectionHeader, DraggableCardContainer, DraggableCardBody } from '../ui'
+import type { ProgramId } from '../../types'
 
 const benefits = [
   {
     id: 'confident',
     label: 'Confident',
     image: '/images/polaroids/Frame 4.webp',
-    className: 'top-[13%] left-[5%]  rotate-[-6deg]',
+    className: 'top-[13%] left-[4%]  rotate-[-6deg]',
     rotation: '-6deg',
-  },
-  {
-    id: 'weight-loss',
-    label: 'Weight Loss',
-    image: '/images/polaroids/Frame 5.webp',
-    className: 'top-[4%]  left-[14%] rotate-[9deg]',
-    rotation: '9deg',
   },
   {
     id: 'self-defense',
     label: 'Self-Defense',
     image: '/images/polaroids/Frame 6.webp',
-    className: 'top-[18%] left-[23%] rotate-[-8deg]',
-    rotation: '-8deg',
+    className: 'top-[5%]  left-[23%] rotate-[8deg]',
+    rotation: '8deg',
   },
   {
     id: 'discipline',
     label: 'Discipline',
     image: '/images/polaroids/Frame 7.webp',
-    className: 'top-[7%]  left-[32%] rotate-[5deg]',
-    rotation: '5deg',
-  },
-  {
-    id: 'mental',
-    label: 'Mental Clarity',
-    image: '/images/polaroids/Frame 8.webp',
-    className: 'top-[17%] left-[41%] rotate-[-11deg]',
-    rotation: '-11deg',
+    className: 'top-[18%] left-[42%] rotate-[-8deg]',
+    rotation: '-8deg',
   },
   {
     id: 'stronger',
     label: 'Stronger',
     image: '/images/polaroids/Frame 9.webp',
-    className: 'top-[5%]  left-[50%] rotate-[7deg]',
-    rotation: '7deg',
+    className: 'top-[6%]  left-[61%] rotate-[6deg]',
+    rotation: '6deg',
   },
   {
     id: 'community',
     label: 'Community',
     image: '/images/polaroids/Frame 10.webp',
-    className: 'top-[15%] left-[59%] rotate-[-5deg]',
+    className: 'top-[15%] left-[80%] rotate-[-5deg]',
     rotation: '-5deg',
-  },
-  {
-    id: 'focus',
-    label: 'Focus',
-    image: '/images/polaroids/Frame 11.webp',
-    className: 'top-[6%]  left-[68%] rotate-[10deg]',
-    rotation: '10deg',
-  },
-  {
-    id: 'flexibility',
-    label: 'Flexibility',
-    image: '/images/polaroids/Frame 12.webp',
-    className: 'top-[17%] left-[77%] rotate-[-9deg]',
-    rotation: '-9deg',
-  },
-  {
-    id: 'endurance',
-    label: 'Endurance',
-    image: '/images/polaroids/Frame 13.webp',
-    className: 'top-[5%]  left-[86%] rotate-[6deg]',
-    rotation: '6deg',
   },
 ]
 
@@ -92,7 +58,7 @@ function PolaroidCard({ image, label, rotation }: { image: string; label: string
   )
 }
 
-export function WhyUs() {
+export function WhyUs({ onBooking }: { onBooking: (program?: ProgramId | '') => void }) {
   return (
     <Section id="why-us" labelledBy="why-us-heading">
       <SectionHeader
@@ -128,16 +94,28 @@ export function WhyUs() {
       <DraggableCardContainer className="hidden md:block relative left-1/2 h-[500px] w-screen -translate-x-1/2">
         {benefits.map((item) => (
           <DraggableCardBody key={item.id} className={item.className}>
-            <div className="bg-white p-3 pb-10 shadow-[0_8px_40px_rgba(0,0,0,0.2)]">
-              <img
-                src={item.image}
-                alt={item.label}
-                width={256}
-                height={256}
-                loading="lazy"
-                decoding="async"
-                className="pointer-events-none h-64 w-64 object-cover"
-              />
+            <div className="group bg-white p-3 pb-10 shadow-[0_8px_40px_rgba(0,0,0,0.2)]">
+              <div className="relative h-64 w-64 overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.label}
+                  width={256}
+                  height={256}
+                  loading="lazy"
+                  decoding="async"
+                  className="pointer-events-none h-64 w-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {/* Overlay + animated button on hover */}
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/40 group-hover:opacity-100">
+                  <button
+                    type="button"
+                    onClick={() => onBooking('')}
+                    className="pointer-events-auto translate-y-3 scale-95 rounded-full bg-white px-6 py-2.5 text-xs font-semibold uppercase tracking-wide text-neutral-900 opacity-0 shadow-lg transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 hover:bg-neutral-100"
+                  >
+                    Start Training
+                  </button>
+                </div>
+              </div>
               <p className="mt-3 text-center text-sm font-semibold tracking-wide text-neutral-700">
                 {item.label}
               </p>

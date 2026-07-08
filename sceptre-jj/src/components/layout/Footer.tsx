@@ -80,7 +80,7 @@ export function Footer({ onBooking }: FooterProps) {
               First trial class is free. No commitment. No credit card required.
             </p>
             <Button
-              variant="white"
+              variant="danger"
               size="md"
               onClick={onBooking}
               className="w-full max-w-xs"
