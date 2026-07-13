@@ -95,7 +95,7 @@ export function WhyUs({
       />
 
       {(ctaLabel || showSeal) && (
-        <div className="-mt-6 mb-4 flex flex-col items-center gap-6">
+        <div className="-mt-6 mb-4 flex flex-col items-start gap-6">
           {ctaLabel && (
             <Button variant="danger" size="lg" onClick={() => onBooking('')}>
               {ctaLabel}
