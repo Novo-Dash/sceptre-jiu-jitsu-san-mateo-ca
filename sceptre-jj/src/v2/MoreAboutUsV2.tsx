@@ -1,4 +1,75 @@
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import { Section } from '../components/ui'
+
+/** Mobile-only infinite, draggable photo carousel. */
+function MobileCarousel({ images }: { images: string[] }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let paused = false
+    const speed = 0.7 // px per frame — gentle auto-scroll
+
+    const tick = () => {
+      const half = el.scrollWidth / 2
+      if (half <= 0) return
+      if (!paused) el.scrollLeft += speed
+      if (el.scrollLeft >= half) el.scrollLeft -= half
+      else if (el.scrollLeft < 0) el.scrollLeft += half
+    }
+
+    const pause = () => { paused = true }
+    const resume = () => { paused = false }
+
+    gsap.ticker.add(tick)
+    el.addEventListener('pointerdown', pause)
+    el.addEventListener('pointerup', resume)
+    el.addEventListener('pointercancel', resume)
+    el.addEventListener('mouseenter', pause)
+    el.addEventListener('mouseleave', resume)
+
+    return () => {
+      gsap.ticker.remove(tick)
+      el.removeEventListener('pointerdown', pause)
+      el.removeEventListener('pointerup', resume)
+      el.removeEventListener('pointercancel', resume)
+      el.removeEventListener('mouseenter', pause)
+      el.removeEventListener('mouseleave', resume)
+    }
+  }, [])
+
+  const doubled = [...images, ...images]
+
+  return (
+    <div className="relative left-1/2 mt-12 w-screen -translate-x-1/2 md:hidden" aria-hidden="true">
+      <div
+        ref={ref}
+        className="flex gap-4 overflow-x-auto px-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ touchAction: 'pan-x' }}
+      >
+        {doubled.map((src, i) => (
+          <div
+            key={i}
+            className="w-44 shrink-0 overflow-hidden rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.18)] ring-1 ring-black/5"
+          >
+            <img
+              src={src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              draggable={false}
+              className="aspect-[3/4] h-full w-full select-none object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 const iconProps = {
   width: 20,
@@ -115,8 +186,12 @@ export function MoreAboutUsV2() {
       </div>
 
       {/* Arced photo strip (full-bleed) */}
+      {/* Mobile — infinite draggable carousel */}
+      <MobileCarousel images={strip} />
+
+      {/* Desktop — arced fan */}
       <div
-        className="relative left-1/2 mt-16 w-screen -translate-x-1/2 pb-16 md:mt-20"
+        className="relative left-1/2 mt-20 hidden w-screen -translate-x-1/2 pb-16 md:block"
         aria-hidden="true"
       >
         <div className="flex items-center justify-center -space-x-5 md:-space-x-6">
