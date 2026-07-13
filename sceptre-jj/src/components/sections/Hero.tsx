@@ -4,9 +4,12 @@ import { Button } from '../ui'
 
 interface HeroProps {
   onBooking: () => void
+  title?: React.ReactNode
+  subtitle?: React.ReactNode
+  ctaLabel?: string
 }
 
-export function Hero({ onBooking }: HeroProps) {
+export function Hero({ onBooking, title, subtitle, ctaLabel }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -69,18 +72,26 @@ export function Hero({ onBooking }: HeroProps) {
           className="font-black text-white leading-[0.85] mb-4 max-md:tracking-[-0.01em] md:[letter-spacing:-1.5px]"
           style={{ fontSize: 'clamp(2.2rem, 6.8vw, 7rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
         >
-          <span className="block whitespace-nowrap">Train Jiu-Jitsu</span>
-          <span className="block md:hidden">In an Inclusive</span>
-          <span className="block md:hidden">Community.</span>
-          <span className="hidden md:block whitespace-nowrap">In an Inclusive Community.</span>
+          {title ?? (
+            <>
+              <span className="block whitespace-nowrap">Train Jiu-Jitsu</span>
+              <span className="block md:hidden">In an Inclusive</span>
+              <span className="block md:hidden">Community.</span>
+              <span className="hidden md:block whitespace-nowrap">In an Inclusive Community.</span>
+            </>
+          )}
         </h1>
 
         <p
           data-hero-animate
           className="text-base md:text-lg text-white leading-[1.6] mt-8 mb-8 max-w-2xl mx-auto"
         >
-          Sceptre is a different kind of academy — here, you start Jiu-Jitsu feeling comfortable,
-          regardless of your age or fitness level. Our community's number one value is inclusion for all.
+          {subtitle ?? (
+            <>
+              Sceptre is a different kind of academy — here, you start Jiu-Jitsu feeling comfortable,
+              regardless of your age or fitness level. Our community's number one value is inclusion for all.
+            </>
+          )}
         </p>
 
         <div data-hero-animate className="flex flex-wrap gap-4 justify-center">
@@ -90,7 +101,7 @@ export function Hero({ onBooking }: HeroProps) {
             onClick={onBooking}
             aria-label="Book your free trial class"
           >
-            Book Your Free Trial
+            {ctaLabel ?? 'Book Your Free Trial'}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

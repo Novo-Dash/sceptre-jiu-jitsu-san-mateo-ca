@@ -4,6 +4,8 @@ import { Button } from '../ui'
 
 interface NavbarProps {
   onBooking: () => void
+  phoneHref?: string
+  phoneLabel?: string
 }
 
 const navLinks = [
@@ -12,7 +14,13 @@ const navLinks = [
   { label: 'About',       href: '#why-us' },
 ]
 
-export function Navbar({ onBooking }: NavbarProps) {
+const phoneIcon = (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M2 3a1 1 0 0 1 1-1h2.5a1 1 0 0 1 .97.757l.75 3a1 1 0 0 1-.27.986L5.8 7.986A9 9 0 0 0 8.014 10.2l1.243-1.15a1 1 0 0 1 .986-.27l3 .75A1 1 0 0 1 14 10.5V13a1 1 0 0 1-1 1C6.373 14 2 9.627 2 4V3Z" fill="currentColor" />
+  </svg>
+)
+
+export function Navbar({ onBooking, phoneHref, phoneLabel }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -92,9 +100,23 @@ export function Navbar({ onBooking }: NavbarProps) {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex">
-            <Button variant={scrolled ? 'primary' : 'white'} size="sm" onClick={onBooking}>
-              Book Free Class
-            </Button>
+            {phoneLabel ? (
+              <a
+                href={phoneHref}
+                className={cn(
+                  'inline-flex items-center gap-2 min-h-[44px] text-[13px] font-semibold tracking-wide transition-all duration-300 hover:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm',
+                  scrolled ? 'text-[var(--color-text)] focus-visible:outline-[var(--color-text)]' : 'text-white focus-visible:outline-white'
+                )}
+                aria-label={`Call ${phoneLabel}`}
+              >
+                {phoneIcon}
+                {phoneLabel}
+              </a>
+            ) : (
+              <Button variant={scrolled ? 'primary' : 'white'} size="sm" onClick={onBooking}>
+                Book Free Class
+              </Button>
+            )}
           </div>
 
           {/* Mobile hamburger */}

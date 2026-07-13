@@ -29,7 +29,7 @@ function GoogleMark() {
   )
 }
 
-export function Testimonials() {
+export function Testimonials({ heading }: { heading?: React.ReactNode }) {
   const [active, setActive]     = useState(0)
   const cardRefs                = useRef<(HTMLDivElement | null)[]>([])
   const autoRef                 = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -100,9 +100,13 @@ export function Testimonials() {
             className="font-black text-[var(--color-text)] leading-[0.92] tracking-[-0.03em]"
             style={{ fontSize: 'clamp(2.4rem, 5.2vw, 5.8rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
           >
-            <span className="block md:hidden">Meet Some of</span>
-            <span className="block md:hidden">Our Students</span>
-            <span className="hidden md:block whitespace-nowrap">Meet Some of Our Students</span>
+            {heading ?? (
+              <>
+                <span className="block md:hidden">Meet Some of</span>
+                <span className="block md:hidden">Our Students</span>
+                <span className="hidden md:block whitespace-nowrap">Meet Some of Our Students</span>
+              </>
+            )}
           </h2>
         </div>
 

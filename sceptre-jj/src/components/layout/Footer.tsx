@@ -2,9 +2,15 @@ import { Button } from '../ui'
 
 interface FooterProps {
   onBooking: () => void
+  blurb?: string
+  email?: string
+  credit?: React.ReactNode
 }
 
-export function Footer({ onBooking }: FooterProps) {
+const defaultBlurb =
+  'Sceptre is an inclusive Jiu-Jitsu academy where anyone can be part of a supportive community. Our method is designed for beginners of all ages and fitness levels.'
+
+export function Footer({ onBooking, blurb = defaultBlurb, email, credit }: FooterProps) {
   const year = new Date().getFullYear()
 
   return (
@@ -27,8 +33,7 @@ export function Footer({ onBooking }: FooterProps) {
               style={{ filter: 'invert(1)' }}
             />
             <p className="text-sm text-white/50 leading-relaxed max-w-xs">
-              Sceptre is an inclusive Jiu-Jitsu academy where anyone can be part of a supportive community.
-              Our method is designed for beginners of all ages and fitness levels.
+              {blurb}
             </p>
             <a
               href="https://www.instagram.com/sceptrejj"
@@ -64,6 +69,21 @@ export function Footer({ onBooking }: FooterProps) {
                   (650) 753-7486
                 </a>
               </li>
+              {email && (
+                <li>
+                  <a
+                    href={`mailto:${email}`}
+                    className="text-white/60 hover:text-white transition-colors min-h-[44px] flex items-center gap-2"
+                    aria-label={`Email ${email}`}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+                      <path d="m2 4 6 4.5L14 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {email}
+                  </a>
+                </li>
+              )}
               <li className="text-white/40 leading-relaxed">
                 3b N Kingston St<br />
                 San Mateo, CA 94401
@@ -93,10 +113,12 @@ export function Footer({ onBooking }: FooterProps) {
         {/* Bottom */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/25">
           <p>&copy; {year} Sceptre Jiu-Jitsu. All rights reserved.</p>
-          <p>
-            Brazilian Jiu-Jitsu &middot;{' '}
-            <span className="text-white/40 font-semibold">San Mateo, CA</span>
-          </p>
+          {credit ?? (
+            <p>
+              Brazilian Jiu-Jitsu &middot;{' '}
+              <span className="text-white/40 font-semibold">San Mateo, CA</span>
+            </p>
+          )}
         </div>
       </div>
     </footer>

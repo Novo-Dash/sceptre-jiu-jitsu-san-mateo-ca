@@ -1,4 +1,4 @@
-import { Section, SectionHeader, DraggableCardContainer, DraggableCardBody } from '../ui'
+import { Section, SectionHeader, DraggableCardContainer, DraggableCardBody, Button } from '../ui'
 import type { ProgramId } from '../../types'
 
 const benefits = [
@@ -58,23 +58,70 @@ function PolaroidCard({ image, label, rotation }: { image: string; label: string
   )
 }
 
-export function WhyUs({ onBooking }: { onBooking: (program?: ProgramId | '') => void }) {
+interface WhyUsProps {
+  onBooking: (program?: ProgramId | '') => void
+  eyebrow?: string
+  headline?: React.ReactNode
+  sub?: string
+  ctaLabel?: string
+  showSeal?: boolean
+}
+
+export function WhyUs({
+  onBooking,
+  eyebrow = 'Our Philosophy',
+  headline,
+  sub = "At Sceptre, we build a community rooted in inclusion. No matter your age or fitness level — you'll be one of us from day one.",
+  ctaLabel,
+  showSeal = false,
+}: WhyUsProps) {
   return (
     <Section id="why-us" labelledBy="why-us-heading">
       <SectionHeader
         id="why-us-heading"
-        eyebrow="Our Philosophy"
+        eyebrow={eyebrow}
         headline={
-          <>
-            <span className="block md:hidden">Training is</span>
-            <span className="block md:hidden">easier together.</span>
-            <span className="hidden md:block whitespace-nowrap">Training is easier together.</span>
-          </>
+          headline ?? (
+            <>
+              <span className="block md:hidden">Training is</span>
+              <span className="block md:hidden">easier together.</span>
+              <span className="hidden md:block whitespace-nowrap">Training is easier together.</span>
+            </>
+          )
         }
-        sub="At Sceptre, we build a community rooted in inclusion. No matter your age or fitness level — you'll be one of us from day one."
+        sub={sub}
         headlineClassName="!text-[clamp(2.6rem,5.2vw,5.8rem)] md:tracking-[-0.03em]"
         headlineStyle={{ fontFamily: "'Noken', system-ui, sans-serif", marginTop: '-0.2em' }}
       />
+
+      {(ctaLabel || showSeal) && (
+        <div className="-mt-6 mb-4 flex flex-col items-center gap-6">
+          {ctaLabel && (
+            <Button variant="danger" size="lg" onClick={() => onBooking('')}>
+              {ctaLabel}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Button>
+          )}
+          {showSeal && (
+            <div
+              className="flex h-24 w-24 flex-col items-center justify-center rounded-full border-2 border-[var(--color-text)] text-center"
+              role="img"
+              aria-label="Beginner friendly since 2018"
+            >
+              <span className="text-[10px] font-semibold uppercase leading-tight tracking-[0.14em] text-[var(--color-text)]">
+                Beginner
+                <br />
+                Friendly
+              </span>
+              <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+                Since 2018
+              </span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Mobile: infinite auto-scroll carousel */}
       <div className="md:hidden overflow-hidden relative left-1/2 w-screen -translate-x-1/2 py-10">

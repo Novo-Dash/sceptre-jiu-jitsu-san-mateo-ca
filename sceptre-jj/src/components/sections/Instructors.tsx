@@ -9,15 +9,25 @@ const beltColorClass: Record<string, string> = {
   blue:   'bg-blue-600',
 }
 
-export function Instructors() {
+interface InstructorsProps {
+  heading?: React.ReactNode
+  sub?: string
+  headlineClassName?: string
+}
+
+export function Instructors({
+  heading = 'Meet our team',
+  sub = 'Three dedicated instructors with one shared mission: to make you feel welcome and help you grow.',
+  headlineClassName = '!text-[clamp(2.8rem,8vw+0.5rem,7rem)] tracking-[-0.03em] md:whitespace-nowrap',
+}: InstructorsProps = {}) {
   return (
     <Section id="instructors" labelledBy="instructors-heading">
       <SectionHeader
         id="instructors-heading"
-        headline="Meet our team"
-        sub="Three dedicated instructors with one shared mission: to make you feel welcome and help you grow."
+        headline={heading}
+        sub={sub}
         centered
-        headlineClassName="!text-[clamp(2.8rem,8vw+0.5rem,7rem)] tracking-[-0.03em] md:whitespace-nowrap"
+        headlineClassName={headlineClassName}
         headlineStyle={{ fontFamily: "'Noken', system-ui, sans-serif" }}
       />
 

@@ -1,7 +1,20 @@
 import { faqItems } from '../../data/faq'
 import { Accordion } from '@base-ui-components/react/accordion'
+import type { FaqItem } from '../../types'
 
-export function FAQ() {
+interface FAQProps {
+  eyebrow?: string
+  title?: React.ReactNode
+  sub?: string
+  items?: FaqItem[]
+}
+
+export function FAQ({
+  eyebrow = 'Common Questions',
+  title = <>Got<br />Questions?</>,
+  sub = 'Everything you need to know before your first class at Sceptre.',
+  items = faqItems,
+}: FAQProps = {}) {
   return (
     <section id="faq" aria-labelledby="faq-title" className="bg-white py-20">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10">
@@ -11,24 +24,24 @@ export function FAQ() {
           {/* Left — title */}
           <div className="flex flex-col gap-6 min-w-0">
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
-              Common Questions
+              {eyebrow}
             </span>
             <h2
               id="faq-title"
               className="font-black text-[var(--color-text)] leading-[0.9] tracking-[-0.03em]"
               style={{ fontSize: 'clamp(2.8rem, 4vw, 5rem)', fontFamily: "'Noken', system-ui, sans-serif" }}
             >
-              Got<br />Questions?
+              {title}
             </h2>
             <p className="text-sm text-[var(--color-text-secondary)] leading-[1.7]">
-              Everything you need to know before your first class at Sceptre.
+              {sub}
             </p>
           </div>
 
           {/* Right — accordion */}
           <div className="lg:col-span-2 min-w-0">
             <Accordion.Root aria-label="Frequently asked questions">
-              {faqItems.map((item) => (
+              {items.map((item) => (
                 <Accordion.Item
                   key={item.id}
                   value={item.id}
