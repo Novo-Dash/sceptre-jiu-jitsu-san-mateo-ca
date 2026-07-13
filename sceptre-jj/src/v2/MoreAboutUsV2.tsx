@@ -116,7 +116,7 @@ export function MoreAboutUsV2() {
 
       {/* Arced photo strip (full-bleed) */}
       <div
-        className="relative left-1/2 mt-20 w-screen -translate-x-1/2"
+        className="relative left-1/2 mt-16 w-screen -translate-x-1/2 pb-16 md:mt-20"
         aria-hidden="true"
       >
         <div className="flex items-center justify-center -space-x-5 md:-space-x-6">
