@@ -102,7 +102,7 @@ export function AppV2() {
       <Footer
         onBooking={book}
         blurb="Welcome to Sceptre Jiu-Jitsu, where beginners feel confident from day one. People of all ages and experience levels can learn, grow, and belong. Book your free trial class today and experience it for yourself."
-        email="hello@sceptrejj.com"
+        email="hello@sceptrejiujitsu.com"
         credit={
           <p>
             &copy; 2026 All rights reserved. &middot;{' '}

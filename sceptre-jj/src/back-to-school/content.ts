@@ -11,8 +11,8 @@ export const STUDENT_ROLE = 'Sceptre Family'
 export const CONTACT = {
   phone: '(650) 753-7486',
   phoneHref: 'tel:+16507537486',
-  email: 'hello@sceptrejj.com',
-  emailHref: 'mailto:hello@sceptrejj.com',
+  email: 'hello@sceptrejiujitsu.com',
+  emailHref: 'mailto:hello@sceptrejiujitsu.com',
   address1: '3b N Kingston St',
   address2: 'San Mateo, CA 94401',
   mapsQuery: '3b N Kingston St, San Mateo, CA 94401',
@@ -87,12 +87,13 @@ export const FAQ: QA[] = [
 
 // ─── STUDENTS — testimonials (kid/parent focused) ───
 export type Review = { id: string; name: string; initial: string; text: string }
+// Real Google reviews from parents (client-provided), trimmed to snippet length.
 export const TESTIMONIALS: Review[] = [
-  { id: 't1', name: 'Amanda R.', initial: 'A', text: 'My son was shy on day one. A few months in, he walks into school standing taller. The coaches make every kid feel like they belong.' },
-  { id: 't2', name: 'Daniel K.', initial: 'D', text: 'Best decision we made this year. The discipline carried straight into homework and bedtime. And he actually asks to go to class.' },
-  { id: 't3', name: 'Priya S.', initial: 'P', text: 'Inclusive, patient, and genuinely fun. My daughter made real friends here and finally found something that\'s just hers.' },
-  { id: 't4', name: 'Marcus T.', initial: 'M', text: 'The free trial sold us instantly. No pressure, just a great first class. Both my kids are now training and thriving.' },
-  { id: 't5', name: 'Jenna L.', initial: 'J', text: 'You can tell the instructors love teaching kids. Safe, structured, and full of encouragement. Highly recommend to any parent.' },
+  { id: 'kirsty', name: 'Kirsty Edwards', initial: 'K', text: 'From the very first class, my 7-year-old daughter was hooked! John is a true master of Jiu Jitsu — his classes are fun, educational, and full of energy, and he genuinely cares about every student.' },
+  { id: 'emily', name: 'Emily Machtinger', initial: 'E', text: 'My girls have been taking classes at Sceptre for about 6 months and absolutely love it. John and Higgie created a fun, inclusive environment — even my shy 9-year-old thrives.' },
+  { id: 'candice', name: 'Candice Pham', initial: 'C', text: 'John and Higgie ran a wonderful jiu jitsu camp our kids really enjoyed. My 2nd grader loved learning the basics, and my kindergartener loved the variety of activities.' },
+  { id: 'jane', name: 'Jane Irwan', initial: 'J', text: 'We\'ve tried many after-school activities and this is the one they\'re most excited for. John and Higgie always make the classes fun and educational at the same time.' },
+  { id: 'noah', name: 'Noah Machtinger', initial: 'N', text: 'Can\'t say enough great things about this gym. John and his team are extremely skilled and fantastic teachers for all ages. My two daughters love their classes.' },
 ]
 
 // ─── GALLERY — images unique to this section (not reused in Hero/Why) ───
