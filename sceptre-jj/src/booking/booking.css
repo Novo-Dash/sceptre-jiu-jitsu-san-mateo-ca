@@ -1,0 +1,23 @@
+/* Kids theme for the shared BookingForm.
+   Re-points the same --color-* tokens the form already uses, so the SAME
+   components restyle without any logic change. Self-contained (works inside
+   a portal, no .bts ancestor needed). Grandstander is loaded by the BTS page. */
+.bk-kids {
+  --color-danger: #E11D2A;
+  --color-text: #1B1A22;
+  --color-text-secondary: #4A4653;
+  --color-text-muted: #8B8792;
+  --color-border: #EAE3D6;
+  --color-surface-alt: #FBF7F0;
+  --color-bg-dark: #1B1A22;
+  --color-bg: #FBF7F0;
+  font-family: 'Nunito', system-ui, sans-serif;
+}
+/* playful display font on headings + buttons within the kids theme */
+.bk-kids h1,
+.bk-kids h2,
+.bk-kids h3,
+.bk-kids button {
+  font-family: 'Grandstander', 'Nunito', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}

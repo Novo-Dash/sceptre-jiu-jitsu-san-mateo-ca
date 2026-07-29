@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import '../back-to-school.css'
 import { useModal } from '../hooks/useModal'
-import { BookingModal } from '../components/ui'
+import { BtsBookingModal } from './BtsBookingModal'
 import { useReveal } from './useReveal'
 import { RIBBON_TEXT, ACADEMY, CONTACT } from './content'
 import { TopNav } from './TopNav'
@@ -36,7 +36,7 @@ function PromoRibbon() {
 
 export function BackToSchoolPage() {
   const scope = useRef<HTMLDivElement>(null)
-  const { isOpen, defaultProgram, openModal, closeModal } = useModal()
+  const { isOpen, openModal, closeModal } = useModal()
   useReveal(scope)
 
   const openBooking = useCallback(() => openModal(''), [openModal])
@@ -115,7 +115,7 @@ export function BackToSchoolPage() {
         <Faq onOpen={openBooking} />
       </main>
       <SiteFooter onOpen={openBooking} />
-      <BookingModal isOpen={isOpen} defaultProgram={defaultProgram} onClose={closeModal} />
+      <BtsBookingModal isOpen={isOpen} onClose={closeModal} />
     </div>
   )
 }

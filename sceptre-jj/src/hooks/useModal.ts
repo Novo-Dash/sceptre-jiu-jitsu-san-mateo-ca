@@ -12,8 +12,8 @@ export function useModal() {
   const openModal = useCallback((program: ProgramId | '' = '') => {
     setState({ isOpen: true, defaultProgram: program })
     document.body.style.overflow = 'hidden'
-    window.fbq?.('track', 'InitiateCheckout', { content_name: 'Free Trial — Sceptre JJ' })
-    window.gtag?.('event', 'begin_checkout')
+    // Tracking (ViewContent / view_content) fires from BookingForm on open.
+    // InitiateCheckout is intentionally NOT sent — there is no checkout (trial is free).
   }, [])
 
   const closeModal = useCallback(() => {
