@@ -37,7 +37,7 @@ export const BENEFITS: Benefit[] = [
 // ─── HOW TO GET STARTED — 3 steps ───
 export type Step = { n: number; title: string; text: string; color: string }
 export const STEPS: Step[] = [
-  { n: 1, title: 'Pick a day', text: 'Choose any class on our schedule — weekday evenings or weekend mornings.', color: 'blue' },
+  { n: 1, title: 'Pick a day', text: 'Choose any kids class on our schedule that works for your family.', color: 'blue' },
   { n: 2, title: 'Show up comfortable', text: 'Wear athletic clothes. We provide a loaner uniform for the first class.', color: 'yellow' },
   { n: 3, title: 'Try your first class free', text: 'Your child joins a kids class and experiences Sceptre Jiu-Jitsu firsthand.', color: 'red' },
 ]
