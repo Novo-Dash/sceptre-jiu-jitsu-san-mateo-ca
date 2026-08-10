@@ -3,18 +3,21 @@ import { BookingForm } from '../booking/BookingForm'
 import { BookingLayout } from '../booking/BookingLayout'
 import type { Program } from '../booking/schedule'
 
-// Back to School shows only the kids programs.
-const KIDS_PROGRAMS: Program[] = ['kids_5_9', 'kids_9_12']
-
 interface Props {
   isOpen: boolean
   onClose: () => void
 }
 
+/** Preselect the first kids program from the live list (already kids-filtered). */
+function pickFirst(list: Program[]): Program | undefined {
+  return list[0]
+}
+
 /**
  * Kids-themed booking modal for the Back to School page.
  * Renders the SAME shared <BookingForm /> (same webhooks + tracking) — only the
- * shell theme and the visible program list differ.
+ * shell theme differs, and the live program list is filtered to the GHL kids
+ * audience (get_programs, §5.1).
  */
 export function BtsBookingModal({ isOpen, onClose }: Props) {
   return (
@@ -28,7 +31,7 @@ export function BtsBookingModal({ isOpen, onClose }: Props) {
               Enter your details, then pick a date and time for your child&apos;s free trial class.
             </Dialog.Description>
             <BookingLayout theme="kids" headline="Book your child&apos;s free class!" onClose={onClose}>
-              <BookingForm defaultProgram="kids_5_9" programs={KIDS_PROGRAMS} onClose={onClose} />
+              <BookingForm audience="kids" defaultPick={pickFirst} onClose={onClose} />
             </BookingLayout>
           </div>
         </Dialog.Popup>

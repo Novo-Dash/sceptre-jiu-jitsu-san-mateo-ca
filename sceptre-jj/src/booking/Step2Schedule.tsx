@@ -7,7 +7,6 @@ import {
   getTimesForDay,
   isDateBookable,
   isoDate,
-  type SlotMap,
 } from './schedule'
 import { CONTACT_PHONE } from './book-constants'
 import type { BookingData } from './webhook'
@@ -22,19 +21,20 @@ function parseIsoLocal(s: string): Date | null {
 interface Props {
   data: BookingData
   update: (patch: Partial<BookingData>) => void
-  slots: SlotMap
-  loading: boolean
-  error: boolean
   onConfirm: () => void
   onBack: () => void
 }
 
-export function Step2Schedule({ data, update, slots, loading, error, onConfirm, onBack }: Props) {
+export function Step2Schedule({ data, update, onConfirm, onBack }: Props) {
+  // Slots arrived WITH the program in the single get_programs call (§5.1) —
+  // no second fetch, no second wait.
+  const slots = data.program?.slots ?? {}
+  const slotsError = data.program?.slots_error ?? null
   const selectedDate = parseIsoLocal(data.date)
 
-  // pre-select the first bookable date once slots are ready and nothing is chosen yet
+  // pre-select the first bookable date on entry; a single available time
+  // comes preselected too (§2)
   useEffect(() => {
-    if (loading || error) return
     if (data.date) return
     const first = getFirstBookableDate(slots)
     if (first) {
@@ -42,7 +42,7 @@ export function Step2Schedule({ data, update, slots, loading, error, onConfirm, 
       update({ date: isoDate(first), time: times.length === 1 ? times[0] : '' })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, error, slots])
+  }, [data.program])
 
   function pickDate(d: Date) {
     const times = getTimesForDay(slots, d)
@@ -51,24 +51,21 @@ export function Step2Schedule({ data, update, slots, loading, error, onConfirm, 
   }
 
   const times = selectedDate ? getTimesForDay(slots, selectedDate) : []
+  const noAvailability = slotsError !== null || getFirstBookableDate(slots) === null
   const canConfirm = !!data.date && !!data.time
 
   return (
     <div className="flex flex-col gap-5">
-      {loading ? (
-        <div className="flex flex-col items-center justify-center gap-3 py-16 text-[var(--color-text-muted)]">
-          <span className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-danger)]" />
-          <p className="text-sm">Loading available times…</p>
-        </div>
+      {noAvailability ? (
+        <p className="rounded-xl bg-[var(--color-danger)]/10 px-4 py-3 text-sm text-[var(--color-text)]">
+          {slotsError !== null
+            ? "We couldn't load the live schedule for this program. Please try again, or call us at "
+            : 'This program has no open times in the next two weeks. Please call us at '}
+          <a href={`tel:${CONTACT_PHONE.href}`} className="font-semibold underline">{CONTACT_PHONE.label}</a>
+          {' '}and we&apos;ll find a spot for you.
+        </p>
       ) : (
         <>
-          {error && (
-            <p className="rounded-xl bg-[var(--color-danger)]/10 px-4 py-3 text-sm text-[var(--color-text)]">
-              We couldn&apos;t load the live schedule. Please try again, or call us at{' '}
-              <a href={`tel:${CONTACT_PHONE.href}`} className="font-semibold underline">{CONTACT_PHONE.label}</a>.
-            </p>
-          )}
-
           <Calendar
             value={selectedDate}
             onSelect={pickDate}

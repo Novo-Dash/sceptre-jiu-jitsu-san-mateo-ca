@@ -1,56 +1,41 @@
 // ─────────────────────────────────────────────────────────────
-// SCEPTRE — Booking schedule config (academy-specific)
+// SCEPTRE — Booking schedule: types + pure date/time helpers.
 // location_id: wjbxnKUT1TDSJVbp2pQt · tz: America/Los_Angeles
-// Calendars pulled live from GHL (id is the key that matches n8n).
+//
+// The program list does NOT live here (spec §5): programs AND their
+// slots come live from GHL in one call (get_programs via n8n, §5.1 —
+// see webhook.fetchPrograms). This module keeps only what GHL can't
+// know: per-academy exceptions and the fixed constants.
 // ─────────────────────────────────────────────────────────────
-
-// Internal keys: ASCII, stable, never shown. Use for LOGIC.
-export type Program =
-  | 'adults_jj'
-  | 'womens_jj'
-  | 'judo'
-  | 'kids_5_9'
-  | 'kids_9_12'
 
 export type Audience = 'adults' | 'kids'
 
-// The order programs appear as radios.
-export const PROGRAMS: Program[] = ['adults_jj', 'womens_jj', 'judo', 'kids_5_9', 'kids_9_12']
+// Slot map as delivered by get_programs: "YYYY-MM-DD" -> ["HH:MM", ...]
+export type SlotMap = Record<string, string[]>
 
-// Label = radio text AND the `program` sent in Webhook 1. Must match the GHL calendar name 1:1.
-export const PROGRAM_LABEL: Record<Program, string> = {
-  adults_jj: 'Adults All Levels Jiu-Jitsu',
-  womens_jj: "Women's All Levels Jiu-Jitsu",
-  judo: 'Judo All Levels',
-  kids_5_9: 'Kids (5-9 Years) Jiu-Jitsu',
-  kids_9_12: 'Kids (9-12 Years) Jiu-Jitsu',
+/** A program exactly as n8n delivers it (§5.1). Nothing here is hand-written. */
+export interface Program {
+  calendar_id: string // matches the calendar in Webhook 2 (rename-proof)
+  name: string // GHL calendar name = `program` in Webhook 1
+  audience: Audience // from the calendar's group in GHL — never recomputed
+  duration_minutes: number | null
+  capacity: number
+  slots: SlotMap // academy wall-clock times
+  slots_error: string | null
 }
 
-// Audience standardizes Webhook 1 for the shared workflow.
-export const PROGRAM_AUDIENCE: Record<Program, Audience> = {
-  adults_jj: 'adults',
-  womens_jj: 'adults',
-  judo: 'adults',
-  kids_5_9: 'kids',
-  kids_9_12: 'kids',
-}
+/**
+ * Exceptions, and ONLY exceptions. Key = calendar_id.
+ *   label -> display alias when the GHL name doesn't fit the public
+ *   hide  -> not shown on the page (e.g. 1:1, private assessment)
+ * A calendar without an entry here shows normally, under its own GHL name.
+ * Starts EMPTY on a new academy; only filled when someone asks.
+ */
+export const PROGRAM_OVERRIDES: Record<string, { label?: string; hide?: true }> = {}
 
-// GHL calendar id per program — the key n8n matches by (Webhook 2 + slots).
-export const PROGRAM_CALENDAR_ID: Record<Program, string> = {
-  adults_jj: 'lkqxdq5R7pL5ROAATPMw',
-  womens_jj: 'rcswDUEvuLYwjnNYAs6E',
-  judo: 'kj2ZApwFRIzNZf60yD5j',
-  kids_5_9: 'HZ2dX6NCV9Rw7Ii12rdy',
-  kids_9_12: 'cid75TsRsR9y38S8jgaY',
-}
-
-// Short helper hints under each radio (UI only — not sent anywhere).
-export const PROGRAM_HINT: Record<Program, string> = {
-  adults_jj: 'Ages 13+ · Gi & No-Gi',
-  womens_jj: 'Women-only · all levels',
-  judo: 'All levels',
-  kids_5_9: 'Ages 5–9',
-  kids_9_12: 'Ages 9–12',
+/** Display alias is visual only — webhooks always carry the raw GHL name. */
+export function displayName(program: Program): string {
+  return PROGRAM_OVERRIDES[program.calendar_id]?.label ?? program.name
 }
 
 export const BOOKING_RANGE_DAYS = 14 // fixed window (same for every academy)
@@ -60,9 +45,6 @@ export const ACADEMY_ADDRESS = {
   city: 'San Mateo, CA 94401',
   mapsUrl: 'https://maps.app.goo.gl/TQLPnf7W2AKEeJB27',
 }
-
-// Slot map as returned/derived from GHL: "YYYY-MM-DD" -> ["HH:MM", ...]
-export type SlotMap = Record<string, string[]>
 
 // ─── date/time helpers (identical logic across academies) ───
 

@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
-import { PROGRAMS, PROGRAM_LABEL, PROGRAM_HINT, PROGRAM_AUDIENCE, type Program } from './schedule'
+import { displayName, type Program } from './schedule'
+import { CONTACT_PHONE } from './book-constants'
 import type { BookingData } from './webhook'
+import type { ProgramsState } from './BookingForm'
 
 export function formatPhone(v: string): string {
   const d = v.replace(/\D/g, '').slice(0, 10)
@@ -10,31 +12,38 @@ export function formatPhone(v: string): string {
   return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`
 }
 
-export function isKidsProgram(p: Program | ''): boolean {
-  return !!p && PROGRAM_AUDIENCE[p] === 'kids'
+export function isKidsProgram(p: Program | null): boolean {
+  return p?.audience === 'kids'
 }
 
 export function isStep1Valid(d: BookingData): boolean {
   const nameOk = d.name.trim().length >= 2
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())
   const phoneOk = d.phone.replace(/\D/g, '').length >= 10
-  const programOk = d.program !== ''
+  const programOk = d.program !== null
   const childOk = !isKidsProgram(d.program) || d.childName.trim().length >= 2
   return nameOk && emailOk && phoneOk && programOk && childOk
+}
+
+/** UI-only hint under each radio (audience + duration from the live program). */
+function programHint(p: Program): string {
+  const parts: string[] = [p.audience === 'kids' ? 'Kids' : 'Adults']
+  if (p.duration_minutes) parts.push(`${p.duration_minutes} min class`)
+  return parts.join(' · ')
 }
 
 interface Props {
   data: BookingData
   update: (patch: Partial<BookingData>) => void
   onNext: () => void
-  programs?: Program[]
+  programs: ProgramsState
 }
 
 const inputClass =
   'w-full rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-danger)] focus:ring-2 focus:ring-[var(--color-danger)]/20 min-h-[44px]'
 const labelClass = 'mb-1.5 block text-sm font-semibold text-[var(--color-text)]'
 
-export function Step1Details({ data, update, onNext, programs = PROGRAMS }: Props) {
+export function Step1Details({ data, update, onNext, programs }: Props) {
   const childRef = useRef<HTMLDivElement>(null)
   const kids = isKidsProgram(data.program)
 
@@ -74,28 +83,55 @@ export function Step1Details({ data, update, onNext, programs = PROGRAMS }: Prop
 
       <div>
         <span className={labelClass}>Which program?</span>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {programs.map((p) => {
-            const active = data.program === p
-            return (
-              <button
-                key={p}
-                type="button"
-                onClick={() => update({ program: p })}
-                aria-pressed={active}
-                className={cn(
-                  'flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition min-h-[44px]',
-                  active
-                    ? 'border-[var(--color-danger)] bg-[var(--color-danger)]/5'
-                    : 'border-[var(--color-border)] hover:border-[var(--color-text)]'
-                )}
-              >
-                <span className="text-sm font-semibold text-[var(--color-text)]">{PROGRAM_LABEL[p]}</span>
-                <span className="text-xs text-[var(--color-text-muted)]">{PROGRAM_HINT[p]}</span>
-              </button>
-            )
-          })}
-        </div>
+
+        {programs.status === 'loading' && (
+          <div role="status" className="flex min-h-[6rem] flex-col items-center justify-center gap-2 py-4 text-[var(--color-text-muted)]">
+            <span className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-danger)]" />
+            <p className="text-sm">Loading programs…</p>
+          </div>
+        )}
+
+        {(programs.status === 'error' ||
+          (programs.status === 'ready' && programs.programs.length === 0)) && (
+          <p role="alert" className="rounded-xl bg-[var(--color-danger)]/10 px-4 py-3 text-sm text-[var(--color-text)]">
+            We couldn&apos;t load our programs right now. Please call us at{' '}
+            <a href={`tel:${CONTACT_PHONE.href}`} className="font-semibold underline">{CONTACT_PHONE.label}</a>{' '}
+            and we&apos;ll get you on the mat.
+          </p>
+        )}
+
+        {programs.status === 'ready' && programs.programs.length > 0 && (
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {programs.programs.map((p) => {
+              const active = data.program?.calendar_id === p.calendar_id
+              return (
+                <button
+                  key={p.calendar_id}
+                  type="button"
+                  onClick={() =>
+                    update({
+                      program: p,
+                      // reset schedule + drop a stale child name on switch
+                      date: '',
+                      time: '',
+                      ...(p.audience === 'kids' ? {} : { childName: '' }),
+                    })
+                  }
+                  aria-pressed={active}
+                  className={cn(
+                    'flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition min-h-[44px]',
+                    active
+                      ? 'border-[var(--color-danger)] bg-[var(--color-danger)]/5'
+                      : 'border-[var(--color-border)] hover:border-[var(--color-text)]'
+                  )}
+                >
+                  <span className="text-sm font-semibold text-[var(--color-text)]">{displayName(p)}</span>
+                  <span className="text-xs text-[var(--color-text-muted)]">{programHint(p)}</span>
+                </button>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       {kids && (

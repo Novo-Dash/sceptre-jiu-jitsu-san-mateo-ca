@@ -10,13 +10,21 @@ interface BookingModalProps {
   onClose: () => void
 }
 
-// Map the site's coarse program ids to the booking calendar programs.
-function mapProgram(p: ProgramId | ''): Program | '' {
+/**
+ * Map the site's coarse CTA context to a pick in the LIVE program list
+ * (get_programs, §5.1). Preselection is a UI convenience only — audience for
+ * tracking/webhooks always comes from the GHL program object itself.
+ */
+function pickerFor(p: ProgramId | ''): ((programs: Program[]) => Program | undefined) | undefined {
   switch (p) {
-    case 'adults': return 'adults_jj'
-    case 'womens': return 'womens_jj'
-    case 'kids': return 'kids_5_9'
-    default: return ''
+    case 'adults':
+      return (list) => list.find((x) => x.audience === 'adults' && !/women/i.test(x.name))
+    case 'womens':
+      return (list) => list.find((x) => /women/i.test(x.name))
+    case 'kids':
+      return (list) => list.find((x) => x.audience === 'kids')
+    default:
+      return undefined
   }
 }
 
@@ -32,7 +40,7 @@ export function BookingModal({ isOpen, defaultProgram, onClose }: BookingModalPr
               Enter your details, then pick a date and time for your free trial class.
             </Dialog.Description>
             <BookingLayout onClose={onClose}>
-              <BookingForm defaultProgram={mapProgram(defaultProgram)} onClose={onClose} />
+              <BookingForm defaultPick={pickerFor(defaultProgram)} onClose={onClose} />
             </BookingLayout>
           </div>
         </Dialog.Popup>

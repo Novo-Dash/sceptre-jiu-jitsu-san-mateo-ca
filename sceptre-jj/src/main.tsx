@@ -6,9 +6,12 @@ import { AppV2 } from './v2/AppV2'
 import { BackToSchoolPage } from './back-to-school/BackToSchoolPage'
 import { BookPage } from './booking/BookPage'
 import { captureAttribution } from './booking/attribution'
+import { captureFbclid } from './booking/fb'
 
 // Capture marketing attribution at boot, before any SPA navigation clears the URL.
 captureAttribution()
+// First-party fbclid capture — the _fbc fallback for the CAPI mirror (§7.6.3).
+captureFbclid()
 
 // Lightweight path-based routing. Vercel already rewrites all routes to index.html.
 //   /v2               → V2 landing page
