@@ -11,7 +11,7 @@ import {
   type Program,
   type SlotMap,
 } from './schedule'
-import { getAttribution } from './attribution'
+import { getAttribution, getSourceLabel } from './attribution'
 
 // FIXED for all academies — do not parametrize.
 const N8N_ORIGIN = 'https://n8n.novodash.com'
@@ -93,7 +93,9 @@ export function sendLeadWebhook(d: BookingData): void {
     program: d.program.name, // raw GHL calendar name → CRM Program field (never the alias)
     audience: d.program.audience, // adults | kids — as delivered by GHL (§5.1)
     submittedAt: new Date().toISOString(),
-    source: SOURCE_LABEL,
+    /* source dinamico: denuncia a origem paga quando ha click id/UTM — e por
+       ele que o lead audit classifica. So no Webhook 1; o 2 segue com o fixo. */
+    source: getSourceLabel(SOURCE_LABEL),
     ...getAttribution(), // UTM keys spread at top level (empty when no campaign)
   }
   void post(LEAD_WEBHOOK_URL, payload)
